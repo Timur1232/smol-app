@@ -23,7 +23,7 @@
 #include <memory>
 #include <vector>
 
-#if defined(__APPLE__)
+#ifdef __APPLE__
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 

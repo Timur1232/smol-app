@@ -4,12 +4,6 @@
 
 namespace CW {
 
-    Renderer& Renderer::Get()
-    {
-        static Renderer renderer;
-        return renderer;
-    }
-
     void Renderer::Draw(const sf::Drawable& target, const sf::RenderStates& states)
     {
         m_RenderTarget->draw(target, states);
@@ -17,7 +11,7 @@ namespace CW {
 
     RCircleShapeBuilder& CW::RCircleShapeBuilder::Draw()
     {
-        Renderer::Get().Draw(m_CirlceMesh, m_Shader);
+        m_RenderTarget->draw(m_CirlceMesh, m_Shader);
         if (m_Default)
             SetDefault();
         return *this;
@@ -56,7 +50,7 @@ namespace CW {
 
     RRectangleShapeBuilder& CW::RRectangleShapeBuilder::Draw()
     {
-        Renderer::Get().Draw(m_RectangleMesh, m_Shader);
+        m_RenderTarget->draw(m_RectangleMesh, m_Shader);
         if (m_Default)
             SetDefault();
         return *this;
@@ -73,7 +67,7 @@ namespace CW {
 
     RLineShapeBuilder& RLineShapeBuilder::Draw()
     {
-        Renderer::Get().Draw(m_LineMesh);
+        m_RenderTarget->draw(m_LineMesh);
         if (m_Default)
             SetDefault();
         return *this;
@@ -81,7 +75,7 @@ namespace CW {
 
     RConvexShapeSetter& RConvexShapeSetter::Draw()
     {
-        Renderer::Get().Draw(m_ConvexMesh, m_Shader);
+        m_RenderTarget->draw(m_ConvexMesh, m_Shader);
         return *this;
     }
 
@@ -95,7 +89,7 @@ namespace CW {
 
     RDotBuilder& RDotBuilder::Draw()
     {
-        Renderer::Get().Draw(m_Dot);
+        m_RenderTarget->draw(m_Dot);
         if (m_Default)
             SetDefault();
         return *this;

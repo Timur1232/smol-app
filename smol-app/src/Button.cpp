@@ -1,22 +1,18 @@
 #include "Button.h"
 
 #include "debug_utils/Log.h"
+#include "Renderer.h"
 
 namespace CW {
 
-    Button::Button(Shared<ICollisionStrategy> collisionChecker)
-        : m_CollisionChecker(collisionChecker)
+    Button::Button(Unique<ICollisionStrategy> collisionChecker)
+        : m_CollisionChecker(std::move(collisionChecker))
     {
     }
 
-    Button::Button(Shared<ICollisionStrategy> collisionChecker,
-        const std::function<bool(MouseButtonPressed&)>& onClickCallback,
-        const std::function<bool(MouseMoved&)>& onEnterCallback,
-        const std::function<bool(MouseMoved&)>& onExitCallback)
-        : m_CollisionChecker(collisionChecker),
-          m_OnClickCallback(onClickCallback),
-          m_OnEnterCallback(onEnterCallback),
-          m_OnExitCallback(onExitCallback)
+    Button::Button(Unique<ICollisionStrategy> collisionChecker, Unique<sf::Drawable> visual)
+        : m_CollisionChecker(std::move(collisionChecker)),
+          m_Visual(std::move(visual))
     {
     }
 
@@ -53,6 +49,16 @@ namespace CW {
                 }
                 return false;
             });
+    }
+
+    void Button::Draw(Renderer& render)
+    {
+        if (!m_Visual)
+        {
+            CW_ERROR("Need drawable object for rendering!");
+            return;
+        }
+        render.Draw(*m_Visual);
     }
 
 } // CW

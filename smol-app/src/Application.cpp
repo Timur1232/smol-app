@@ -2,9 +2,10 @@
 
 namespace CW {
 
-    Application::Application(u32 width, u32 height, std::string_view title)
+	Application::Application(u32 width, u32 height, std::string_view title)
+		: m_WindowTitle(title)
     {
-		m_Window = CreateUnique<sf::RenderWindow>(sf::VideoMode({ width, height }), title.data());
+		m_Window = CreateUnique<sf::RenderWindow>(sf::VideoMode({ width, height }), m_WindowTitle.c_str());
     }
 
 	Application::~Application()

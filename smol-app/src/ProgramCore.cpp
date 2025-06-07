@@ -17,12 +17,13 @@ namespace CW {
 #ifdef CW_CUSTOM_EVENTS_LIST
 		EventHandler::Get().Reserve(1024);
 #endif
+		m_Renderer = CreateUnique<Renderer>();
 		CW_INFO("Core initialized.");
 	}
 
 	ProgramCore::~ProgramCore()
 	{
-		Renderer::Get().ReleaseRenderTarget();
+		m_Renderer->ReleaseRenderTarget();
 		ImGui::SFML::Shutdown();
 		CW_INFO("Closing program.");
 	}
@@ -131,13 +132,6 @@ namespace CW {
 				send_event_to_layers(*m_App, closed);
 				OnClosed();
 			}
-			else if (auto e = event->getIf<sf::Event::Resized>())
-			{
-				WindowResized resized(*e);
-				OnWindowResized(resized);
-				m_App->OnEvent(resized);
-				send_event_to_layers(*m_App, resized);
-			}
 			// ивенты MouseButtonPressed, MouseButtonReleased и MouseMoved отправл€ютс€, только если не были обработаны ImGui
 			else if (auto e = event->getIf<sf::Event::MouseButtonPressed>(); e && !ImGui::GetIO().WantCaptureMouse)
 			{
@@ -163,7 +157,8 @@ namespace CW {
 				dispatch_core_event<
 					KeyPressed, sf::Event::KeyPressed,
 					KeyReleased, sf::Event::KeyReleased,
-					MouseWheelScrolled, sf::Event::MouseWheelScrolled
+					MouseWheelScrolled, sf::Event::MouseWheelScrolled,
+					WindowResized, sf::Event::Resized
 				>(*event, *m_App);
 			}
 		}
@@ -209,12 +204,6 @@ namespace CW {
 		{
 			CW_CRITICAL("Failing initializing ImGui::SFML.");
 		}
-	}
-
-	void ProgramCore::OnWindowResized(WindowResized& e)
-	{
-		Renderer::Get().SetDefaultViewSize(static_cast<sf::Vector2f>(e.Size));
-		Renderer::Get().SetDefaultViewCenter({ static_cast<float>(e.Size.x) / 2.0f, static_cast<float>(e.Size.y) / 2.0f });
 	}
 
 	void ProgramCore::OnClosed()
