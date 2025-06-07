@@ -162,15 +162,12 @@ namespace CW {
         Renderer(const Renderer&) = delete;
         Renderer(Renderer&&) = delete;
 
-        void SetRenderTarget(sf::RenderTarget* target) { m_RenderTarget = target; m_DefaultView = target->getView(); }
+        void SetRenderTarget(sf::RenderTarget* target) { m_RenderTarget = target; }
         const sf::RenderTarget& GetRenderTarget() const { return *m_RenderTarget; }
         void ReleaseRenderTarget() { m_RenderTarget = nullptr; }
         void Draw(const sf::Drawable& target, const sf::RenderStates& states = sf::RenderStates::Default);
         void SetView(const sf::View& view) { m_RenderTarget->setView(view); }
-        void ApplyDefaultView() { m_RenderTarget->setView(m_DefaultView); }
-        void SetDefaultView(const sf::View& view) { m_DefaultView = view; }
-        void SetDefaultViewSize(sf::Vector2f size) { m_DefaultView.setSize(size); }
-        void SetDefaultViewCenter(sf::Vector2f center) { m_DefaultView.setCenter(center); }
+        void SetDefaultView(const sf::View& view) { m_RenderTarget->setView(m_RenderTarget->getDefaultView()); }
 
         RCircleShapeBuilder& BeginCircleShape() { m_CircleShapeBuilde.SetRenderTarget(m_RenderTarget); return m_CircleShapeBuilde; }
         RRectangleShapeBuilder& BeginRectangleShape() { m_RectangleShapeBuilder.SetRenderTarget(m_RenderTarget); return m_RectangleShapeBuilder; }
@@ -185,7 +182,6 @@ namespace CW {
 
     private:
         sf::RenderTarget* m_RenderTarget = nullptr;
-        sf::View m_DefaultView;
 
         RCircleShapeBuilder m_CircleShapeBuilde;
         RRectangleShapeBuilder m_RectangleShapeBuilder;

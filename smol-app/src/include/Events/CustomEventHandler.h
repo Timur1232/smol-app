@@ -3,10 +3,10 @@
 #ifdef CW_CUSTOM_EVENTS_LIST
 
 #include "debug_utils/Log.h"
-#include "CW_CustomEvents.h"
+#include "Events/CW_CustomEvents.h"
 #include "Application.h"
 
-#include "CW_CustomEventsList.h"
+#include "Events/CW_CustomEventsList.h"
 
 namespace CW {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CW_CustomEventsList.h"
+#include "Events/CW_CustomEventsList.h"
 #include <SFML/Window/Event.hpp>
 
 namespace CW {
