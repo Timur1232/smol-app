@@ -9,7 +9,7 @@ I took it from my [coursework project](https://github.com/Timur1232/coursework-2
 - FastNoise2: https://github.com/Auburn/FastNoise2
 
 # Building
-1. After cloning open VS solution and build in Release or Debug. Final lib will be in `x64/<Configuration>`.
+1. After cloning repo, open VS solution and build in Release or Debug. Final lib will be in `x64/<Configuration>`.
 2. Download [SFML](https://www.sfml-dev.org/download/) and follow [tutorial](https://www.sfml-dev.org/tutorials/3.0/getting-started/visual-studio/) to set it up.
 3. Link `smol-app.lib` and add `src/include` and `dependencies/imgui` folders to include path.
 
